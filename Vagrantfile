@@ -1,5 +1,9 @@
 IMAGE_NAME = "bento/ubuntu-18.04"
-N = 2
+$set_environment_variables = <<SCRIPT
+tee "/etc/profile.d/kube_envvars.sh" > "/dev/null" <<EOF
+export KUBECONFIG=/home/vagrant/.kube/admin.conf
+EOF
+SCRIPT
 
 Vagrant.configure("2") do |config|
     config.ssh.insert_key = false
@@ -12,29 +16,11 @@ Vagrant.configure("2") do |config|
     config.vm.define "k8s-master" do |master|
         master.vm.box = IMAGE_NAME
         master.vm.network "private_network", ip: "192.168.50.10"
-        master.vm.hostname = "k8s-master"
-         
-        config.vm.provision "ansible" do |ansible|
-          ansible.playbook = "kubernetes-ansible/master-playbook.yml"
-          ansible.extra_vars = {
-                node_ip: "192.168.50.10",
-          }
-          # ansible.inventory_path = "kubernetes-ansible/hosts.yaml"
-        end
-    end
+        master.vm.provision "shell", inline: $set_environment_variables, run: "always"
+        master.vm.provision "file", source: "./k8s.py", destination: "/home/vagrant/k8s.py"
+        master.vm.provision "shell", path: "script.sh"
+        master.vm.provision "shell", path: "check_namespaces.sh", run: "always"
 
-    (1..N).each do |i|
-        config.vm.define "node-#{i}" do |node|
-            node.vm.box = IMAGE_NAME
-            node.vm.network "private_network", ip: "192.168.50.#{i + 10}"
-            node.vm.hostname = "node-#{i}"
-            node.vm.provision "ansible" do |ansible|
-                ansible.playbook = "kubernetes-ansible/node-playbook.yml"
-                ansible.extra_vars = {
-                    node_ip: "192.168.50.#{i + 10}",
-                }
-                # ansible.inventory_path = "kubernetes-ansible/hosts.yaml"
-            end
-        end
     end
 end
+
