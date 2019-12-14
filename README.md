@@ -1,6 +1,5 @@
-# DevOps Challenge
 
-## Challenge
+# DevOps Challenge
 
 As developer, I want to launch a local Kubernetes development environment automatically using kubeadm. I expect to create my environment running "vagrant up", and after that I must be able to login into the Vagrant VM and run kubectl commands.
 
@@ -19,13 +18,13 @@ The main file is `/home/vagrant/.kube/config` without this file nothing works. I
 
 Check if everything is ok executing `vagrant version`
 
-## Reproduce the challenge
+## Reproduce the challenge
 
 1. Just only execute `vagrant up --provision` or `vagrant up`
 
 In the end, you should see a list with namespaces in JSON format.
 
-## Double check of `kubectl` is working
+## Double check of `kubectl` is working
 
 1. Execute `vagrant ssh`
 2. Execute `kubectl get nodes`
