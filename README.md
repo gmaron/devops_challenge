@@ -5,7 +5,7 @@ As developer, I want to launch a local Kubernetes development environment automa
 
 Include a simple Python script that list all the running pods in all the namespaces. Call this script at the end of `vagrant up` or `provision` process to validate Kubernetes installation.
 
-## How it is solve
+## How it is solve
 
 At this first solution, it executes a `bash` script with a simple step-by-step  linux commands. It install and setup all the necessary dependencies such as Docker, Kubernetes (`kubectl` and `kubeadm`) and Python dependencie of `kubernetes`.
 
