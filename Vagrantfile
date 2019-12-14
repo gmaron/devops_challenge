@@ -1,7 +1,7 @@
 IMAGE_NAME = "bento/ubuntu-18.04"
 $set_environment_variables = <<SCRIPT
 tee "/etc/profile.d/kube_envvars.sh" > "/dev/null" <<EOF
-export KUBECONFIG=/home/vagrant/.kube/admin.conf
+export KUBECONFIG=/home/vagrant/.kube/config
 EOF
 SCRIPT
 

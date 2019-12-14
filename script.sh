@@ -26,10 +26,9 @@ sudo kubeadm init --pod-network-cidr=192.168.50.0/16
 
 echo "===============> SETUP K8S CONFIG"
 sudo mkdir -p /home/vagrant/.kube
-sudo cp -i /etc/kubernetes/admin.conf /home/vagrant/.kube/admin.conf
-sudo chown vagrant:vagrant /home/vagrant/.kube/admin.conf
-export KUBECONFIG=/home/vagrant/.kube/admin.conf
-echo "===============> KUBECONFIG = $KUBECONFIG"
+sudo cp -i /etc/kubernetes/admin.conf /home/vagrant/.kube/config
+sudo chown vagrant:vagrant /home/vagrant/.kube/config
+
 echo "===============> INSTALL K8S PYTHON DEP"
 pip3 install kubernetes
 
